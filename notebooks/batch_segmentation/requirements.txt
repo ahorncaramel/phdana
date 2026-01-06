@@ -1,0 +1,6 @@
+cellpose==4.0.8
+torch
+numpy
+imageio
+scikit-image
+matplotlib

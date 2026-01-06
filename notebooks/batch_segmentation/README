@@ -1,0 +1,19 @@
+# FA Cellpose Batch Segmentation (avg_for_seg images)
+
+## What this does
+- Loads all 16-bit segmentation-average TIFFs from `in_dir`
+- Normalizes each image to [0, 1] using 1st–99th percentiles
+- Runs Cellpose segmentation (CellposeModel / cpsam in this environment)
+- Saves:
+  - `cellpose_rois/masks_tif/*_masks.tif` (label image)
+  - `cellpose_rois/outlines_png/*_outlines.png` (preview)
+
+## How to run
+1. Open `notebooks/02_batch_cellpose_seg_and_save_rois.ipynb`
+2. Set `in_dir` to the folder containing the TIFF images (on the SSD)
+3. Set `use_gpu = True`
+4. Run all cells
+
+## Notes
+- GPU is strongly recommended; CPU may be too slow for cpsam, never worked for me
+- Input images expected: 2D .tif (H x W), typically 16-bit.
