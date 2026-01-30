@@ -1,0 +1,52 @@
+Pipeline overview (Fura-2 Ca2+ imaging)
+
+Calcium imaging of Hac15 cells using Fura and 340/380 (1 image each per second)
+-> one folder per experimentation day, YYMMDD_Hac15_description
+    -> each folder has several subfolders with one experiment each
+        -> always has: 1. .tif file with data   2. comments.txt     3. DisplaySettings.json
+
+Workflow: 
+1. Copy all data to a new folder, raw data can never be touched. 
+2. Folder structure at the end of analysis: 
+    #Todo
+
+
+3. Image preprocessing (manually)
+    - Open raw .tif time stack in Fiji (interleaved 340/380 frames).
+    - Deinterleave stack into 340 nm and 380 nm stacks.
+    - Compute ratio stack: R = F340 / F380, 32-bit
+    - Decide if this recording will be part of the analysis round (some recordings do not qualify)
+    - Save ratio in Ratio folder with experiment number (the number stays for this analysis round)
+    - Naming convention : 00_ratio_YYMMDD_slicex
+
+4. Create average Image for segmentation (manually)
+    - Select baseline time window (frames 100-200) and average frames → segmentation image.
+    - Save in folder for segmentation with same experiment number eg. 00_avgforseg_YYMMDD_Slicex
+
+5. Segment cells on segmentation image → generate ROIs. (all at once, automated)
+    - Use the script "batch segmentation" on a well working fast computer that has gpu
+    - Can do the whole folder at once, creates entries for all entries in input folder in:
+    - Cellpose_rois
+        -Cellpose_rois
+            -masks_tif: only the masks
+            -rois_zip: this is the useful thing
+    - #Todo make naming consistent, so that the outputs have the experiment number on them
+    - #Todo Naming convention: 00_roi_YYMMDD_slicex and 00_mask_YYMMDD_slicex
+
+6. Make csv of intensitys of cells (one at a time)
+    - Open recording in fiji, with roi_manager open zip file
+    - create csv 
+    - #todo: describe how?
+    - save in folder csv as 00_csv_YYMMDD_slicex
+
+7. Create flat image (one at a time)
+    - Close recording, leave 
+    - Open avgimage in fiji and in roi manager open roi.rois_zip
+    - Overlay and flatten image strg+shift+f
+    - save in Cellpose_rois as 00_flat_YYMMDD_slicex
+        - flat_images
+
+8. Create pdf report (one at a time)
+    - Use notebook "All_traces"
+    - Give path for flat image & csv
+    - look first (mode = "show"), then create pdf
