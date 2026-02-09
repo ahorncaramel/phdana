@@ -14,7 +14,7 @@ Workflow:
 3. Image preprocessing (manually)
     - Open raw .tif time stack in Fiji (interleaved 340/380 frames).
     - Deinterleave stack into 340 nm and 380 nm stacks.
-    - Compute ratio stack: R = F340 / F380, 32-bit
+    - Compute ratio stack: Analysis>Image Calculator> Divide #1 / #2, click 32-bit. (R = F340 / F380)
     - Decide if this recording will be part of the analysis round (some recordings do not qualify)
     - Save ratio in Ratio folder with experiment number (the number stays for this analysis round)
     - Naming convention : 00_ratio_YYMMDD_slicex
@@ -33,10 +33,13 @@ Workflow:
     - #Todo make naming consistent, so that the outputs have the experiment number on them
     - #Todo Naming convention: 00_roi_YYMMDD_slicex and 00_mask_YYMMDD_slicex
 
-6. Make csv of intensitys of cells (one at a time)
-    - Open recording in fiji, with roi_manager open zip file
-    - create csv 
-    - #todo: describe how?
+6. Make csv of intensities of cells (one at a time)
+    - Open full recording of experiemt in fiji, 
+    - with roi_manager open zip file of corresponding roi and overlay it
+    - check if cells are valid, if not remove single cells
+    - for image selected analyze> Set measurements> haken nur bei gray values (area und andere haken weg) 
+    - roi manager>more>multimeasure: "measure all" and "one row per slice". Columns = #cells
+    - creates csv, rename and save 
     - save in folder csv as 00_csv_YYMMDD_slicex
 
 7. Create flat image (one at a time)
